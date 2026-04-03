@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {Owner} from "src/owner.sol";
+import {Owner} from "./owner.sol";
 
 contract Bank is Owner {
 

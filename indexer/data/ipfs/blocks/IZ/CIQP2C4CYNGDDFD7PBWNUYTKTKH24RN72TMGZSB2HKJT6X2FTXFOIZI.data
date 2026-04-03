@@ -1,0 +1,43 @@
+
+·	¯	dataSources:
+  - kind: ethereum
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/Qmd5y3MRqkAojKyyid88BGNNiVooQkuxRZ6dq5wuyk8Cph
+          name: Bank
+      apiVersion: 0.0.9
+      entities:
+        - Approval
+        - Deposit
+        - OwnerChanged
+        - Transfer
+        - Withdraw
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: OwnerChanged(indexed address,indexed address)
+          handler: handleOwnerChanged
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+      file:
+        /: /ipfs/QmdkqDzzCKzPXAarGTutSjr8BdpWF2NJrmGwbs24V6wzrc
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: Bank
+    network: mainnet
+    source:
+      abi: Bank
+      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+      startBlock: 0
+indexerHints:
+  prune: auto
+schema:
+  file:
+    /: /ipfs/QmWDye7SzER7593dg5Vh21qm6SVAJaJSkhJr5WHBMZxBFU
+specVersion: 1.3.0
+¯	

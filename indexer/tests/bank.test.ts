@@ -17,10 +17,11 @@ import { createApprovalEvent } from "./bank-utils"
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
-    let owner = Address.fromString("0x0000000000000000000000000000000000000001")
-    let spender = Address.fromString(
-      "0x0000000000000000000000000000000000000001"
-    )
+    // Using Anvil Account (0)
+    let owner = Address.fromString("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266")
+    // Using Anvil Account (1)
+    let spender = Address.fromString("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")
+    
     let amount = BigInt.fromI32(234)
     let newApprovalEvent = createApprovalEvent(owner, spender, amount)
     handleApproval(newApprovalEvent)
@@ -41,13 +42,13 @@ describe("Describe entity assertions", () => {
       "Approval",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "owner",
-      "0x0000000000000000000000000000000000000001"
+      "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
     )
     assert.fieldEquals(
       "Approval",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "spender",
-      "0x0000000000000000000000000000000000000001"
+      "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
     )
     assert.fieldEquals(
       "Approval",

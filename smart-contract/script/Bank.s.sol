@@ -10,7 +10,7 @@ contract BankScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
         vm.startBroadcast(deployerPrivateKey);
-        Bank bank = new Bank("INDIANCURRENCY", "inr", 2, 0);
+        Bank bank = new Bank("INDIANCURRENCY", "inr", 2, 10000000);
         vm.stopBroadcast();
 
         console.log("Deployed Bank Contract at address:", address(bank));

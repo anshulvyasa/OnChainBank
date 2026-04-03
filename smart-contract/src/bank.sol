@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import {Owner} from "./owner.sol";
 
 contract Bank is Owner {
-
     //  State Variables
     string private _name;
     string private _symbol;
@@ -16,7 +15,11 @@ contract Bank is Owner {
 
     // Events
     event Transfer(address indexed from, address indexed to, uint256 amount);
-    event Approval(address indexed owner, address indexed spender, uint256 amount);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 amount
+    );
     event Deposit(address indexed owner, uint256 amount);
     event Withdraw(address indexed owner, uint256 amount);
 
@@ -26,7 +29,11 @@ contract Bank is Owner {
     error InvalidReceiver(address receiver);
     error InvalidApprover(address approver);
     error InvalidSpender(address spender);
-    error InsufficientAllowance(address spender, uint256 allowance, uint256 needed);
+    error InsufficientAllowance(
+        address spender,
+        uint256 allowance,
+        uint256 needed
+    );
 
     // Constructor
     constructor(
@@ -39,6 +46,8 @@ contract Bank is Owner {
         _symbol = symbol_;
         _decimals = decimals_;
         _totalSupply = totalSupply_;
+
+        _balances[msg.sender] = totalSupply_;
     }
 
     //View Functions
@@ -62,7 +71,10 @@ contract Bank is Owner {
         return _balances[owner_];
     }
 
-    function allowance(address owner_, address spender_) public view returns (uint256) {
+    function allowance(
+        address owner_,
+        address spender_
+    ) public view returns (uint256) {
         return _allowances[owner_][spender_];
     }
 
@@ -77,20 +89,30 @@ contract Bank is Owner {
         return true;
     }
 
-    function transferFrom(address from_, address to_, uint256 value_) public returns (bool) {
+    function transferFrom(
+        address from_,
+        address to_,
+        uint256 value_
+    ) public returns (bool) {
         _spendAllowance(from_, msg.sender, value_);
         _transfer(from_, to_, value_);
         return true;
     }
 
     // Bank Logic
-    function deposit(address owner_, uint256 value_) public onlyOwner returns (bool) {
+    function deposit(
+        address owner_,
+        uint256 value_
+    ) public onlyOwner returns (bool) {
         _update(address(0), owner_, value_);
         emit Deposit(owner_, value_);
         return true;
     }
 
-    function withdraw(address owner_, uint256 value_) public onlyOwner returns (bool) {
+    function withdraw(
+        address owner_,
+        uint256 value_
+    ) public onlyOwner returns (bool) {
         _update(owner_, address(0), value_);
         emit Withdraw(owner_, value_);
         return true;
@@ -106,7 +128,7 @@ contract Bank is Owner {
 
     function _update(address from_, address to_, uint256 value_) internal {
         if (from_ == address(0)) {
-            _totalSupply += value_;  // Mint
+            _totalSupply += value_; // Mint
         } else {
             uint256 fromBalance = _balances[from_];
             if (fromBalance < value_) {
@@ -119,7 +141,7 @@ contract Bank is Owner {
         }
 
         if (to_ == address(0)) {
-            _totalSupply -= value_;  // Burn
+            _totalSupply -= value_; // Burn
         } else {
             _balances[to_] += value_;
         }
@@ -127,7 +149,11 @@ contract Bank is Owner {
         emit Transfer(from_, to_, value_);
     }
 
-    function _approve(address owner_, address spender_, uint256 value_) internal {
+    function _approve(
+        address owner_,
+        address spender_,
+        uint256 value_
+    ) internal {
         if (owner_ == address(0)) revert InvalidApprover(owner_);
         if (spender_ == address(0)) revert InvalidSpender(spender_);
 
@@ -135,7 +161,11 @@ contract Bank is Owner {
         emit Approval(owner_, spender_, value_);
     }
 
-    function _spendAllowance(address owner_, address spender_, uint256 value_) internal {
+    function _spendAllowance(
+        address owner_,
+        address spender_,
+        uint256 value_
+    ) internal {
         uint256 currentAllowance = _allowances[owner_][spender_];
 
         if (currentAllowance < value_) {

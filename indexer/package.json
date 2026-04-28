@@ -8,7 +8,9 @@
     "create-local": "graph create --node http://localhost:8020/ omegaindexer",
     "remove-local": "graph remove --node http://localhost:8020/ omegaindexer",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 omegaindexer",
-    "test": "graph test"
+    "test": "graph test",
+    "reset": "docker compose down -v",
+    "start-fresh": "bash start-fresh.sh"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.98.1",
